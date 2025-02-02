@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CMartinezEjercicioAutosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Autos">
+          <Key>
+            <PropertyRef Name="IdAuto" />
+          </Key>
+          <Property Name="IdAuto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Año" Type="int" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kilometraje" Type="int" />
+          <Property Name="NumeroPuertas" Type="int" />
+          <Property Name="Transmisión" Type="nvarchar" MaxLength="20" />
+          <Property Name="Combustible" Type="nvarchar" MaxLength="20" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="IdMarca" Type="int" />
+          <Property Name="IdModelo" Type="int" />
+          <Property Name="IdVersion" Type="int" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="IdMarca" />
+          </Key>
+          <Property Name="IdMarca" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="IdModelo" />
+          </Key>
+          <Property Name="IdModelo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdMarca" Type="int" />
+        </EntityType>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="IdVersion" />
+          </Key>
+          <Property Name="IdVersion" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdModelo" Type="int" />
+        </EntityType>
+        <Association Name="FK__Autos__IdMarca__6D0D32F4">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="Autos">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Autos__IdModelo__6E01572D">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Autos">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Autos__IdVersion__6EF57B66">
+          <End Role="Version" Type="Self.Version" Multiplicity="0..1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Version">
+              <PropertyRef Name="IdVersion" />
+            </Principal>
+            <Dependent Role="Autos">
+              <PropertyRef Name="IdVersion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Modelo__IdMarca__628FA481">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Version__IdModel__656C112C">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="Version" Type="Self.Version" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Version">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AutoInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Año" Type="int" Mode="In" />
+          <Parameter Name="Color" Type="nvarchar" Mode="In" />
+          <Parameter Name="Kilometraje" Type="float" Mode="In" />
+          <Parameter Name="NumeroPuertas" Type="int" Mode="In" />
+          <Parameter Name="Transmisión" Type="nvarchar" Mode="In" />
+          <Parameter Name="Combustible" Type="nvarchar" Mode="In" />
+          <Parameter Name="Precio" Type="decimal" Mode="In" />
+          <Parameter Name="IdMarca" Type="int" Mode="In" />
+          <Parameter Name="IdModelo" Type="int" Mode="In" />
+          <Parameter Name="IdVersion" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetAllAutos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="CMartinezEjercicioAutosModelStoreContainer">
+          <EntitySet Name="Autos" EntityType="Self.Autos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Version" EntityType="Self.Version" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Autos__IdMarca__6D0D32F4" Association="Self.FK__Autos__IdMarca__6D0D32F4">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Autos__IdModelo__6E01572D" Association="Self.FK__Autos__IdModelo__6E01572D">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Autos__IdVersion__6EF57B66" Association="Self.FK__Autos__IdVersion__6EF57B66">
+            <End Role="Version" EntitySet="Version" />
+            <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Modelo__IdMarca__628FA481" Association="Self.FK__Modelo__IdMarca__628FA481">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Version__IdModel__656C112C" Association="Self.FK__Version__IdModel__656C112C">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Version" EntitySet="Version" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMartinezEjercicioAutosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Autos">
+          <Key>
+            <PropertyRef Name="IdAuto" />
+          </Key>
+          <Property Name="IdAuto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Año" Type="Int32" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kilometraje" Type="Int32" />
+          <Property Name="NumeroPuertas" Type="Int32" />
+          <Property Name="Transmisión" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Combustible" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="IdMarca" Type="Int32" />
+          <Property Name="IdModelo" Type="Int32" />
+          <Property Name="IdVersion" Type="Int32" />
+          <NavigationProperty Name="Marca" Relationship="Self.FK__Autos__IdMarca__6D0D32F4" FromRole="Autos" ToRole="Marca" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__Autos__IdModelo__6E01572D" FromRole="Autos" ToRole="Modelo" />
+          <NavigationProperty Name="Version" Relationship="Self.FK__Autos__IdVersion__6EF57B66" FromRole="Autos" ToRole="Version" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="IdMarca" />
+          </Key>
+          <Property Name="IdMarca" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Autos" Relationship="Self.FK__Autos__IdMarca__6D0D32F4" FromRole="Marca" ToRole="Autos" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__Modelo__IdMarca__628FA481" FromRole="Marca" ToRole="Modelo" />
+        </EntityType>
+        <EntityType Name="Modelo">
+          <Key>
+            <PropertyRef Name="IdModelo" />
+          </Key>
+          <Property Name="IdModelo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdMarca" Type="Int32" />
+          <NavigationProperty Name="Autos" Relationship="Self.FK__Autos__IdModelo__6E01572D" FromRole="Modelo" ToRole="Autos" />
+          <NavigationProperty Name="Marca" Relationship="Self.FK__Modelo__IdMarca__628FA481" FromRole="Modelo" ToRole="Marca" />
+          <NavigationProperty Name="Version" Relationship="Self.FK__Version__IdModel__656C112C" FromRole="Modelo" ToRole="Version" />
+        </EntityType>
+        <EntityType Name="Version">
+          <Key>
+            <PropertyRef Name="IdVersion" />
+          </Key>
+          <Property Name="IdVersion" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdModelo" Type="Int32" />
+          <NavigationProperty Name="Autos" Relationship="Self.FK__Autos__IdVersion__6EF57B66" FromRole="Version" ToRole="Autos" />
+          <NavigationProperty Name="Modelo" Relationship="Self.FK__Version__IdModel__656C112C" FromRole="Version" ToRole="Modelo" />
+        </EntityType>
+        <Association Name="FK__Autos__IdMarca__6D0D32F4">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="Autos">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Autos__IdModelo__6E01572D">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Autos">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Autos__IdVersion__6EF57B66">
+          <End Role="Version" Type="Self.Version" Multiplicity="0..1" />
+          <End Role="Autos" Type="Self.Autos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Version">
+              <PropertyRef Name="IdVersion" />
+            </Principal>
+            <Dependent Role="Autos">
+              <PropertyRef Name="IdVersion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Modelo__IdMarca__628FA481">
+          <End Role="Marca" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marca">
+              <PropertyRef Name="IdMarca" />
+            </Principal>
+            <Dependent Role="Modelo">
+              <PropertyRef Name="IdMarca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Version__IdModel__656C112C">
+          <End Role="Modelo" Type="Self.Modelo" Multiplicity="0..1" />
+          <End Role="Version" Type="Self.Version" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modelo">
+              <PropertyRef Name="IdModelo" />
+            </Principal>
+            <Dependent Role="Version">
+              <PropertyRef Name="IdModelo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMartinezEjercicioAutosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Autos" EntityType="Self.Autos" />
+          <EntitySet Name="Marca" EntityType="Self.Marca" />
+          <EntitySet Name="Modelo" EntityType="Self.Modelo" />
+          <EntitySet Name="Version" EntityType="Self.Version" />
+          <AssociationSet Name="FK__Autos__IdMarca__6D0D32F4" Association="Self.FK__Autos__IdMarca__6D0D32F4">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Autos__IdModelo__6E01572D" Association="Self.FK__Autos__IdModelo__6E01572D">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Autos__IdVersion__6EF57B66" Association="Self.FK__Autos__IdVersion__6EF57B66">
+            <End Role="Version" EntitySet="Version" />
+            <End Role="Autos" EntitySet="Autos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Modelo__IdMarca__628FA481" Association="Self.FK__Modelo__IdMarca__628FA481">
+            <End Role="Marca" EntitySet="Marca" />
+            <End Role="Modelo" EntitySet="Modelo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Version__IdModel__656C112C" Association="Self.FK__Version__IdModel__656C112C">
+            <End Role="Modelo" EntitySet="Modelo" />
+            <End Role="Version" EntitySet="Version" />
+          </AssociationSet>
+          <FunctionImport Name="GetAllAutos" ReturnType="Collection(CMartinezEjercicioAutosModel.GetAllAutos_Result)" />
+          <FunctionImport Name="AutoInsert">
+            <Parameter Name="Año" Mode="In" Type="Int32" />
+            <Parameter Name="Color" Mode="In" Type="String" />
+            <Parameter Name="Kilometraje" Mode="In" Type="Double" />
+            <Parameter Name="NumeroPuertas" Mode="In" Type="Int32" />
+            <Parameter Name="Transmisión" Mode="In" Type="String" />
+            <Parameter Name="Combustible" Mode="In" Type="String" />
+            <Parameter Name="Precio" Mode="In" Type="Decimal" />
+            <Parameter Name="IdMarca" Mode="In" Type="Int32" />
+            <Parameter Name="IdModelo" Mode="In" Type="Int32" />
+            <Parameter Name="IdVersion" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetAllAutos_Result">
+          <Property Type="Int32" Name="IdAuto" Nullable="false" />
+          <Property Type="Int32" Name="Año" Nullable="false" />
+          <Property Type="String" Name="Color" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Kilometraje" Nullable="true" />
+          <Property Type="Int32" Name="NumeroPuertas" Nullable="true" />
+          <Property Type="String" Name="Transmisión" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="Combustible" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Precio" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="String" Name="MarcaNombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ModeloNombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="VersionNombre" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMartinezEjercicioAutosModelStoreContainer" CdmEntityContainer="CMartinezEjercicioAutosEntities">
+          <EntitySetMapping Name="Autos">
+            <EntityTypeMapping TypeName="CMartinezEjercicioAutosModel.Autos">
+              <MappingFragment StoreEntitySet="Autos">
+                <ScalarProperty Name="IdAuto" ColumnName="IdAuto" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Kilometraje" ColumnName="Kilometraje" />
+                <ScalarProperty Name="NumeroPuertas" ColumnName="NumeroPuertas" />
+                <ScalarProperty Name="Transmisión" ColumnName="Transmisión" />
+                <ScalarProperty Name="Combustible" ColumnName="Combustible" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="IdVersion" ColumnName="IdVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marca">
+            <EntityTypeMapping TypeName="CMartinezEjercicioAutosModel.Marca">
+              <MappingFragment StoreEntitySet="Marca">
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modelo">
+            <EntityTypeMapping TypeName="CMartinezEjercicioAutosModel.Modelo">
+              <MappingFragment StoreEntitySet="Modelo">
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdMarca" ColumnName="IdMarca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Version">
+            <EntityTypeMapping TypeName="CMartinezEjercicioAutosModel.Version">
+              <MappingFragment StoreEntitySet="Version">
+                <ScalarProperty Name="IdVersion" ColumnName="IdVersion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdModelo" ColumnName="IdModelo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetAllAutos" FunctionName="CMartinezEjercicioAutosModel.Store.GetAllAutos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CMartinezEjercicioAutosModel.GetAllAutos_Result">
+                <ScalarProperty Name="IdAuto" ColumnName="IdAuto" />
+                <ScalarProperty Name="Año" ColumnName="Año" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Kilometraje" ColumnName="Kilometraje" />
+                <ScalarProperty Name="NumeroPuertas" ColumnName="NumeroPuertas" />
+                <ScalarProperty Name="Transmisión" ColumnName="Transmisión" />
+                <ScalarProperty Name="Combustible" ColumnName="Combustible" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="MarcaNombre" ColumnName="MarcaNombre" />
+                <ScalarProperty Name="ModeloNombre" ColumnName="ModeloNombre" />
+                <ScalarProperty Name="VersionNombre" ColumnName="VersionNombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AutoInsert" FunctionName="CMartinezEjercicioAutosModel.Store.AutoInsert" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

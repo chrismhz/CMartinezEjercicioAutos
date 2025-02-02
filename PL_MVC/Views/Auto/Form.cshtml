@@ -1,0 +1,159 @@
+﻿@model ML.Auto
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Registros de un Nuevo Auto</h2>
+            <h5>Ingrese todos los campos correspondientes para el registro de un nuevo Auto.</h5>
+            <hr />
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                @using (Html.BeginForm("Form", "Auto", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.LabelFor(model => model.IdAuto, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.IdAuto, "{0:#.#}", new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.Año, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Año, "{0:#.#}", new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.Color, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Color, new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.Kilometraje, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Kilometraje, "{0:#.#}", new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.NumeroPuertas, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.NumeroPuertas, "{0:#.#}", new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.Transmisión, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Transmisión, new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.Combustible, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Combustible, new { @class = "form-control" })
+
+                    @Html.LabelFor(model => model.Precio, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Precio, "{0:#.#}", new { @class = "form-control" })
+
+                    <br />
+                    //<h6>Autos</h6>
+                    <div class="row">
+                        <div class="mb-3 col">
+                            @Html.LabelFor(model => model.Version.Modelo.Marca, new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.Version.Modelo.Marca.IdMarca, new SelectList(Model.Version.Modelo.Marca.Marcas, "IdMarca", "Nombre"),
+                           "------- Selecciona una Marca -------", new { @class = "form-control", @id = "ddlMarca", @onchange = "ModeloGetByIdMarca()" })
+
+                        </div>
+                        <div class="mb-3 col">
+                            @Html.LabelFor(model => model.Version.Modelo, new { @class = "form-label" })
+                            @if (Model.Version.Modelo.Modelos != null)
+                            {
+                                @Html.DropDownListFor(model => model.Version.Modelo.IdModelo, new SelectList(Model.Version.Modelo.Modelos, "IdModelo", "Nombre"),
+                               "------- Selecciona un Modelo -------", new { @class = "form-control", @id = "ddlModelo", @onchange = "VersionGetByIdModelo()" } )
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(model => model.Version.Modelo.IdModelo, new SelectList(String.Empty), "------ Selecciona un Modelo ------",
+                               new { @class = "form-control", @id = "ddlModelo", @onchange = "VersionGetByIdModelo()" })
+                            }
+                        </div>
+                        <div class="mb-3 col">
+                            @Html.LabelFor(model => model.Version, new { @class = "form-label" })
+                            @if (Model.Version.Versiones != null)
+                            {
+                                @Html.DropDownListFor(model => model.Version.IdVersion, new SelectList(Model.Version.Versiones, "IdVersion", "Nombre"),
+                               "------- Selecciona una Version -------", new { @class = "form-control", @id = "ddlVersion" })
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(model => model.Version.IdVersion, new SelectList(String.Empty), "------- Selecciona una Version -------",
+                               new { @class = "form-control", @id = "ddlVersion" })
+                            }
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+
+                    <button type="submit" class="btn btn-success">Guadar</button>
+                    @Html.ActionLink("Regresar", "GetAll", "Auto", new { @class = "btn btn-danger" })
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript">
+
+    function ModeloGetByIdMarca() {
+        var idMarca = $('#ddlMarca').val();
+
+        $.ajax({
+            url: '@Url.Action("GetModeloGetByIdMarca", "Auto")',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { IdMarca: idMarca },
+            success: function (result) {
+                if (result.Correct) {
+                    var modelos = result.Objects;
+
+                    $('#ddlModelo').empty()
+
+                    var options = '<option value="" selected>Selecciona Modelo</option>';
+
+                    $.each(modelos, function (index, modelo) {
+
+                         options += '<option value="' + modelo.IdModelo + '">' + modelo.Nombre + '</option>';
+                    });
+                    $('#ddlModelo').empty().append(options);
+                }
+                else {
+                    alert('ERROR')
+                }
+            },
+            error: function () {
+                alert('Error al recibir la URL de modelos.');
+            }
+        });
+    }
+
+    function VersionGetByIdModelo() {
+        var idModelo = $('#ddlModelo').val();
+
+        $.ajax({
+            url: '@Url.Action("GetVersionGetByIdModelo", "Auto")',
+            type: 'GET',
+            dataType: 'JSON',
+            data: { IdModelo: idModelo },
+            success: function (result) {
+                if (result.Correct) {
+                    var versiones = result.Objects;
+
+                    $('#ddlVersion').empty()
+
+                    var options = '<option value="" selected>Selecciona Version</option>';
+
+                    $.each(versiones, function (index, version) {
+
+                        options += '<option value="' + version.IdVersion + '">' + version.Nombre + '</option>';
+
+                    });
+                    $('#ddlVersion').empty().append(options)
+                }
+                else {
+                    alert('ERROR')
+                }
+            },
+            error: function () {
+                alert('Error al recibir la URL de Versiones.');
+            }
+        });
+    }
+</script>
+

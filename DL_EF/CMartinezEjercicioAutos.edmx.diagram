@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="20a5777b663a47f9b8756ed3f52c2501" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="CMartinezEjercicioAutosModel.Autos" Width="1.5" PointX="4.125" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMartinezEjercicioAutosModel.Marca" Width="1.5" PointX="7.5" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMartinezEjercicioAutosModel.Modelo" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CMartinezEjercicioAutosModel.Version" Width="1.5" PointX="7.625" PointY="7.875" IsExpanded="true" />
+        <AssociationConnector Association="CMartinezEjercicioAutosModel.FK__Autos__IdMarca__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="CMartinezEjercicioAutosModel.FK__Autos__IdModelo__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="CMartinezEjercicioAutosModel.FK__Autos__IdVersion__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="CMartinezEjercicioAutosModel.FK__Modelo__IdMarca__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="CMartinezEjercicioAutosModel.FK__Version__IdModel__656C112C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
